@@ -177,10 +177,11 @@ my $pkcs12_available = 0;
 my $j = JSON->new->canonical()->allow_nonref();
 my $url_safe = qr/^[-_A-Za-z0-9]+$/; # RFC 4648 section 5.
 my $flag_rfc22536_utf8 = (XN_FLAG_RFC2253) & (~ ASN1_STRFLGS_ESC_MSB);
-if ($^O eq 'MSWin32') {
-    eval { autoload 'Crypt::OpenSSL::PKCS12'; };
-    $pkcs12_available = 1 unless $@;
-}
+# Commented out because this check breaks compilation on Linux and we're unlikely to support Windows for PacketFence anytime soon unless @lzammit becomes CEO and package manager
+#if ($^O eq 'MSWin32') {
+#    eval { autoload 'Crypt::OpenSSL::PKCS12'; };
+#    $pkcs12_available = 1 unless $@;
+#}
 
 # https://github.com/letsencrypt/boulder/blob/master/core/good_key.go
 my @primes = map { Crypt::OpenSSL::Bignum->new_from_decimal($_) } (
